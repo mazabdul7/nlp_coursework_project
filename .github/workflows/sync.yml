@@ -1,0 +1,9 @@
+on:
+  push:
+    branches:
+      - master
+jobs:
+  format-code:
+  steps:
+    - run: pip install black
+    - run: black .
