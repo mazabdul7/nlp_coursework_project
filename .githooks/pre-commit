@@ -11,4 +11,3 @@ black .
 
 # sort requirements
 sort -o requirements.txt requirements.txt
-
