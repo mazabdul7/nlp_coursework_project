@@ -1,0 +1,1 @@
+!/. ./. ./. Amalifa/NNP Chicago/NNP Hotel/NNP I/PRP I/PRP an/DT and/CC and/CC and/CC another/DT away/RB be/VB building/NN by/IN customer/NN decor/NN definitely/RB design/NN exceptional/JJ exciting/JJ experience/NN extremely/RB for/IN hotel/NN in/IN of/IN pleasant/JJ returning/VBG service/NN stay/NN taken/VBN the/DT the/DT the/DT was/VBD was/VBD will/MD

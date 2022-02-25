@@ -1,0 +1,1 @@
+./. ./. ./. ./. Beautiful/JJ I/PRP I/PRP They/PRP a/DT and/CC are/VBP are/VBP chicago/NNP chicago/NNP even/RB friendly/JJ honeymoon/NN hotel/NN hotel/NN hotel/NN hotel/NN if/IN in/IN in/IN in/IN in/IN looking/VBG luxury/NN monaco/NN my/PRP$ my/PRP$ on/IN pet/JJ provide/VB recommend/VB room/NN services/NNS spa/NN stay/VB this/DT to/TO visited/VBD wife/NN with/IN would/MD you/PRP

@@ -1,0 +1,1 @@
+'s/POS ,/, ,/, ,/, ,/, ./. ./. ./. Hyatts/NNPS I/PRP It/PRP Like/IN My/PRP$ a/DT all/DT an/DT and/CC and/CC and/CC and/CC awesome/JJ bar/NN bathroom/NN bed/NN comfortable/JJ feature/NN for/IN friend/NN great/JJ had/VBD had/VBD hotel/NN hotel/NN in/IN it/PRP just/RB large/JJ large/JJ lot/NN loved/VBD night/NN of/IN one/CD pillows/NNS stayed/VBD the/DT the/DT very/RB water/NN

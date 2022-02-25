@@ -1,0 +1,1 @@
+!/. .../: ./. ./. ./. ./. Chicago/NNP Clean/JJ Do/VBP Excellent/JJ Golden/NNP Great/NNP Location/NNP Mile/NNP Pricey/JJ a/DT and/CC and/CC concierge/NN do/VBP downtown/NN excellent/JJ exploring/VBG for/IN great/JJ if/IN is/VBZ main/JJ n't/RB n't/RB need/VB of/IN rooms/NNS service/NN service/NN sights/NNS spacious/JJ the/DT the/DT though/IN to/TO valet/VB view/NN with/IN you/PRP

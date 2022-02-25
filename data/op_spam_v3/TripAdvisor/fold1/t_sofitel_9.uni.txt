@@ -1,0 +1,1 @@
+!/. $/$ 's/VBZ ,/, ,/, ,/, ,/, ,/, ,/, ,/, ,/, -LRB-/-LRB- -RRB-/-RRB- ./. 40/CD Chicago/NNP European/NNP Great/NNP Very/NNP air/NN amazing/JJ amenities/NNS and/CC and/CC bathroom/NN beds/NNS but/CC but/CC clean/JJ conditioning/NN expensive/JJ in/IN in/IN it/PRP nifty/JJ out/IN parking/NN rooms/NNS sensibility/NN service/NN speedy/JJ view/NN with/IN wonderful/JJ

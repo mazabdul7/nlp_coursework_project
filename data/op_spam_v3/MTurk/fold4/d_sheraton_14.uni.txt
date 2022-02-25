@@ -1,0 +1,1 @@
+!/. ,/, ,/, ,/, -/: Bobby/NNP Chicago/NNP Hotel/NNP My/PRP$ Sheraton/NNP Sheraton/NNP Stay/NNP Towers/NNP able/JJ and/CC and/CC at/IN get/VB good/JJ guest/NN i/FW i/FW i/FW in/IN meeting/NN my/PRP$ rested/VBD room/NN slept/VBD stayed/VBD thank/VB the/DT to/TO to/TO traditional/JJ was/VBD was/VBD well/RB wonderful/JJ you/PRP

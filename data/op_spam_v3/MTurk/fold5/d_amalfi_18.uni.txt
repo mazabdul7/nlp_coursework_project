@@ -1,0 +1,1 @@
+./. ./. ./. ./. ./. Chicago/NNP Chicago/NNP Great/NNP I/PRP Nice/JJ The/DT The/DT again/RB and/CC and/CC breakfast/NN clean/JJ complimentartry/NN definitely/RB downtown/NN here/RB in/IN in/IN is/VBZ is/VBZ location/NN next/JJ professional/JJ room/NN spacious/JJ staff/NN stay/VB time/NN warm/JJ will/MD

@@ -1,0 +1,1 @@
+!/. ./. ./. Chicago/NNP I/PRP I/PRP I/PRP Swissotel/NNP The/DT a/DT again/RB and/CC and/CC at/IN beat/NN business/NN clean/JJ heart/NN helpful/JJ in/IN it/PRP nice/JJ on/IN room/NN staff/NN stay/VB stayed/VBD very/RB very/RB very/RB was/VBD was/VBD was/VBD was/VBD when/WRB would/MD
