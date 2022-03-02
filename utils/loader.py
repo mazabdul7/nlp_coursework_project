@@ -26,3 +26,6 @@ class DataLoader:
     def load_trip(self):
         ''' This one is in unigram format already so needs special parsing. '''
         pass
+    
+    def load_amazon(self):
+        pass
