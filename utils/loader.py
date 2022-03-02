@@ -18,10 +18,10 @@ class DataLoader:
         """ Retrieve all dataset files in the specified path, recursively.
 
         Args:
-            path (_type_): _description_
+            path (str): Path to search.
 
         Returns:
-            _type_: _description_
+            List[str]: List of all found data files.
         """
         files = [f for f in glob.glob(os.path.join(path, '*/*.txt')) if '.bi' not in f and '.uni' not in f]
         return files
