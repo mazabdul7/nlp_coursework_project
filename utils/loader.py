@@ -23,7 +23,7 @@ class DataLoader:
         Returns:
             List[str]: List of all found data files.
         """
-        files = [f for f in glob.glob(os.path.join(path, '*/*.txt')) if '.bi' not in f and '.uni' not in f]
+        files = [f for f in glob.glob(os.path.join(path, '*.txt'), recursive=True) if '.bi' not in f and '.uni' not in f]
         return files
         
     def load_gold_data(self, type, neg_polarity=False, pos_polarity=True):
@@ -55,8 +55,8 @@ class DataLoader:
                 
         return reviews
 
-    def load_amazon(self, deceptive=False):
-        """ Loads data from the Amazon dataset. Label 1 is deceptive reviews, Label 2 is authentic.
+    def load_amazon(self, deceptive=False, all=False):
+        """ Loads data from the Amazon dataset. Label 1 (1) is deceptive reviews, Label 2 (0) is authentic.
 
         Args:
             deceptive (bool, optional): Return deceptive instead of authentic.
@@ -66,7 +66,12 @@ class DataLoader:
         """
         data_path = self.retrieve_file_list(os.path.join(self.base_path, config['amazon_path']))[0]
         data = pd.read_table(data_path)
+        data.loc[data['LABEL'] == '__label2__', 'LABEL'] = 1
+        data.loc[data['LABEL'] == '__label1__', 'LABEL'] = 0
         
-        if deceptive:
-            return data.get(data['LABEL'] == '__label1__')
-        return data.get(data['LABEL'] == '__label2__')
+        if all: 
+            return data
+        else:
+            if deceptive:
+                return data.get(data['LABEL'] == 1)
+            return data.get(data['LABEL'] == 0)
