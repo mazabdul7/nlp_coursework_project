@@ -3,7 +3,7 @@ from transformers import pipeline, AutoTokenizer, AutoModelWithLMHead, AdamW, ge
 class GPT2:
     def __init__(self) -> None:
         self.tokenizer = AutoTokenizer.from_pretrained('gpt2') # Tokenizer
-        self.model = AutoModelWithLMHead.from_pretrained('gpt2-large') # Weights
+        self.model = AutoModelWithLMHead.from_pretrained('gpt2') # Weights
         self.generator = self.instantiate_gen('text-generation', self.model, self.tokenizer, 'pt')
         
     def instantiate_gen(self, task, model, tokenizer, framework):
