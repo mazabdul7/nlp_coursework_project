@@ -1,5 +1,5 @@
 import os
-import glob
+from pathlib import Path
 import pandas as pd
 from utils.configs import config
 
@@ -23,10 +23,10 @@ class DataLoader:
         Returns:
             List[str]: List of all found data files.
         """
-        files = [f for f in glob.glob(os.path.join(path, '*.txt'), recursive=True) if '.bi' not in f and '.uni' not in f]
+        files = [p for p in Path(path).rglob('*.txt')]
         return files
         
-    def load_gold_data(self, type, neg_polarity=False, pos_polarity=True):
+    def load_gold_data(self, type, neg_polarity=False, pos_polarity=True): # Possibly change it to return pandas to be same as amazon?
         """ Loads data from the 'GOLD' standard datasets
 
         Args:
@@ -51,7 +51,7 @@ class DataLoader:
         reviews = []
         for file in file_list:
             with open(file, 'r') as f:
-                reviews.append(f.read().splitlines())
+                reviews.extend(f.read().splitlines())
                 
         return reviews
 
