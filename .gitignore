@@ -143,3 +143,4 @@ cython_debug/
 **i.ipynb
 sample_data/
 wandb/
+*.zip
