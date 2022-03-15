@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 import pandas as pd
 from utils.configs import config
+from typing import List
 
 
 class DataLoader:
@@ -17,7 +18,7 @@ class DataLoader:
 		}
 
 	@staticmethod
-	def retrieve_file_list(path):
+	def list_all_txt_files(path) -> list:
 		""" Retrieve all dataset files in the specified path, recursively.
 
 		Args:
@@ -29,12 +30,12 @@ class DataLoader:
 		files = [p for p in Path(path).rglob('*.txt')]
 		return files
 
-	def load_gold_data(self, type, neg_polarity=False, pos_polarity=True):
+	def load_gold_data(self, _type: str, neg_polarity=True, pos_polarity=True) -> list:
 		# Possibly change it to return pandas to be same as amazon?
 		""" Loads data from the 'GOLD' standard datasets
 
 		Args:
-			type (str): Choose whether to load deceptive ('dec') or authentic ('truth') dataset.
+			_type (str): Choose whether to load deceptive ('dec') or authentic ('truth') dataset.
 			neg_polarity (bool, optional): Return negative polarity reviews.
 			pos_polarity (bool, optional): Return positive polarity reviews.
 
@@ -50,10 +51,10 @@ class DataLoader:
 			polarities.append(self.neg_path)
 		if pos_polarity:
 			polarities.append(self.pos_path)
-		paths = [os.path.join(self.base_path, config['gold_path'], pol_path, self.types[type]) for pol_path in
+		paths = [os.path.join(self.base_path, config['gold_path'], pol_path, self.types[_type]) for pol_path in
 		         polarities]
 		for path in paths:
-			file_list.extend(self.retrieve_file_list(path))
+			file_list.extend(self.list_all_txt_files(path))
 
 		reviews = []
 		for file in file_list:
@@ -62,7 +63,7 @@ class DataLoader:
 
 		return reviews
 
-	def load_amazon(self, deceptive=False, all=False):
+	def load_amazon(self, deceptive=False, all=False) -> pd.DataFrame:
 		""" Loads data from the Amazon dataset. Label 1 (1) is deceptive reviews, Label 2 (0) is authentic.
 
 		Args:
@@ -71,7 +72,7 @@ class DataLoader:
 		Returns:
 			Dataframe: Returns a dataframe of the reviews.
 		"""
-		data_path = self.retrieve_file_list(os.path.join(self.base_path, config['amazon_path']))[0]
+		data_path = self.list_all_txt_files(os.path.join(self.base_path, config['amazon_path']))[0]
 		data = pd.read_table(data_path)
 		data.loc[data['LABEL'] == '__label2__', 'LABEL'] = 0
 		data.loc[data['LABEL'] == '__label1__', 'LABEL'] = 1

@@ -23,7 +23,7 @@ def tokenize_data(inputs):
 if __name__ == '__main__':
 	# Load datasets
 	loader = DataLoader()
-	truth_data = loader.load_gold_data('truth', True, True)
+	truth_data = loader.load_gold_data('truth')
 	truth_data_val = truth_data[:int(val_ratio * len(truth_data))]
 	truth_data_train = truth_data[int(val_ratio * len(truth_data)):]
 

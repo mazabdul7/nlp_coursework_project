@@ -26,7 +26,7 @@ def tokenize_data(inputs):
 if __name__ == '__main__':
 	# Load datasets
 	data_loader = DataLoader()
-	truth_data = data_loader.load_amazon()
+	truth_data = data_loader.load_amazon(deceptive=False)
 	truth_data = truth_data.sample(frac=1)
 	truth_data_val = truth_data.iloc[:int(val_ratio * len(truth_data))]
 	truth_data_train = truth_data.iloc[int(val_ratio * len(truth_data)):]
