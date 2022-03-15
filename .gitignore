@@ -139,6 +139,7 @@ cython_debug/
 
 # MISC
 .DS_Store
+.idea/
 .vscode
 **i.ipynb
 sample_data/
