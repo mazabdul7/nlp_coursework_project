@@ -9,15 +9,6 @@ tokenizer = AutoTokenizer.from_pretrained('distilgpt2')
 val_ratio = 0.2
 
 
-def df_to_dataset_obj(dataframe, columns):
-	dataset = datasets.Dataset.from_pandas(dataframe[columns])
-	dataset = dataset.remove_columns('__index_level_0__')
-	dataset = dataset.rename_column('LABEL', 'labels')
-	dataset = dataset.rename_column('REVIEW_TEXT', 'text')
-
-	return dataset
-
-
 def list_to_dataset_obj(data):
 	data_df = pd.DataFrame(data, columns=['text'])
 	dataset = datasets.Dataset.from_pandas(data_df)
