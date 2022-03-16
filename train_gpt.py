@@ -95,6 +95,3 @@ trainer = Trainer(
 torch.cuda.empty_cache()
 
 trainer.train()
-
-
-model.save_pretrained('sample_data')
