@@ -1,9 +1,12 @@
 from transformers import pipeline, AutoTokenizer, AutoModelWithLMHead, AdamW, get_linear_schedule_with_warmup
 
 class GPT2:
-    def __init__(self) -> None:
+    def __init__(self, model=None) -> None:
         self.tokenizer = AutoTokenizer.from_pretrained('gpt2') # Tokenizer
-        self.model = AutoModelWithLMHead.from_pretrained('gpt2') # Weights
+        if model:
+            self.model = model
+        else:
+            self.model = AutoModelWithLMHead.from_pretrained('gpt2')
         self.generator = self.instantiate_gen('text-generation', self.model, self.tokenizer, 'pt')
         
     def instantiate_gen(self, task, model, tokenizer, framework):
