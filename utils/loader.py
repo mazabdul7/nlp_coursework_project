@@ -89,5 +89,31 @@ class DataLoader:
 				return data.get(data['LABEL'] == 1)
 			return data.get(data['LABEL'] == 0)
 
+	def load_gold_txt(self, deceptive=False, all=False) -> pd.DataFrame:
+		""" Loads data from the Amazon dataset. Label 1 (1) is deceptive reviews, Label 2 (0) is authentic.
+
+		Args:
+			deceptive (bool, optional): Return deceptive instead of authentic.
+            test_mode (bool, optional): Returns test set instead.
+
+		Returns:
+			Dataframe: Returns a dataframe of the reviews.
+		"""
+		data_path = self.list_all_txt_files(self.base_path)[0]
+
+		# cols = [f'col_{i}' for i in range(0,2)]
+		# data = pd.read_csv(data_path, names=cols, sep=',')
+
+		data = pd.read_csv(data_path, sep='   ')
+		data.loc[data['LABEL'] == '__label2__', 'LABEL'] = 0
+		data.loc[data['LABEL'] == '__label1__', 'LABEL'] = 1
+
+		if all:
+			return data
+		else:
+			if deceptive:
+				return data.get(data['LABEL'] == 1)
+			return data.get(data['LABEL'] == 0)
+
 	def testing(self):
 		print('updated2')
