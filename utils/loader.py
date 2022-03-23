@@ -30,7 +30,7 @@ class DataLoader:
 		files = [p for p in Path(path).rglob('*.txt')]
 		return files
 
-	def load_gold_data(self, _type: str, neg_polarity=True, pos_polarity=True) -> list:
+	def load_gold_data(self, _type = str, neg_polarity=True, pos_polarity=True) -> list:
 		# Possibly change it to return pandas to be same as amazon?
 		""" Loads data from the 'GOLD' standard datasets
 
@@ -42,7 +42,7 @@ class DataLoader:
 		Returns:
 			List[str]: List of dataset reviews as strings.
 		"""
-		if type not in self.types.keys():
+		if _type not in self.types.keys():
 			raise Exception('Type is incorrect...')
 
 		polarities = []
@@ -88,3 +88,6 @@ class DataLoader:
 			if deceptive:
 				return data.get(data['LABEL'] == 1)
 			return data.get(data['LABEL'] == 0)
+
+	def testing(self):
+		print('updated2')
