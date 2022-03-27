@@ -146,3 +146,4 @@ cython_debug/
 sample_data/
 wandb/
 *.zip
+**training

@@ -1,25 +1,66 @@
-from transformers import pipeline, AutoTokenizer, AutoModelWithLMHead, AdamW, get_linear_schedule_with_warmup
+from transformers import AutoTokenizer, AutoModelForCausalLM, AutoConfig
+import torch
+
+MODEL = 'distilgpt2'
 
 class GPT2:
-    def __init__(self, model=None) -> None:
-        self.tokenizer = AutoTokenizer.from_pretrained('gpt2') # Tokenizer
-        if model:
-            self.model = model
-        else:
-            self.model = AutoModelWithLMHead.from_pretrained('gpt2')
-        self.generator = self.instantiate_gen('text-generation', self.model, self.tokenizer, 'pt')
+    def __init__(self, model_path=None, full_model=False, special_tokens=None) -> None:
+        self.tokenizer = self.get_tokenizer(special_tokens)
+        self.model = self.get_model(self.tokenizer, special_tokens=special_tokens, load_model_path=model_path, full_model=full_model)
         
-    def instantiate_gen(self, task, model, tokenizer, framework):
-        return pipeline(task, model=model, tokenizer=tokenizer, framework=framework)
+    def get_tokenizer(self, special_tokens=None):
+        tokenizer = AutoTokenizer.from_pretrained(MODEL, use_fast=True)
+
+        if special_tokens:
+            tokenizer.add_special_tokens(special_tokens)
+        return tokenizer
     
-    def set_optimiser(self, epochs, lr=1e-4, warmup=0.1):
-        self.optimizer = AdamW(self.generator.parameters(), lr=lr, t_total=epochs, correct_bias=False)
-        scheduler = get_linear_schedule_with_warmup(self.optimizer, num_warmup_steps=warmup*epochs, num_training_steps=epochs) # Possibly use a warmup scheduler
+    def get_model(self, tokenizer, special_tokens=None, load_model_path=None, full_model=False):
+        if full_model:
+            model = AutoModelForCausalLM.from_pretrained(load_model_path)
+            model.cuda()
+            return model 
         
-        return self.optimizer, scheduler
+        if special_tokens:
+            config = AutoConfig.from_pretrained(MODEL, 
+                                                bos_token_id=tokenizer.bos_token_id,
+                                                eos_token_id=tokenizer.eos_token_id,
+                                                sep_token_id=tokenizer.sep_token_id,
+                                                pad_token_id=tokenizer.pad_token_id,
+                                                output_hidden_states=False)
+        else: 
+            config = AutoConfig.from_pretrained(MODEL,                                     
+                                                pad_token_id=tokenizer.eos_token_id,
+                                                output_hidden_states=False)    
+
+        model = AutoModelForCausalLM.from_pretrained(MODEL, config=config)
+
+        if special_tokens:
+            model.resize_token_embeddings(len(tokenizer))
+
+        if load_model_path:
+            model.load_state_dict(torch.load(load_model_path))#map_location=torch.device('cpu')))
+
+        model.to(torch.device('cuda:0'))
+        return model
     
-    def generate_text(self, pretext, num_sequences, max_length=1000):
-        generated_txt = self.generator(pretext, max_length=max_length, num_return_sequences=num_sequences)
-        outputs = [list(txt.values())[0] for txt in generated_txt]
+    def generate_text(self, prompt, category, print_output=True, **kwargs):
+        generated_outputs = []
         
-        return outputs
+        # Tokenize prompt
+        tokenized_prompt = self.tokenizer.encode(prompt, return_tensors='pt').to('cuda:0')
+        
+        # Language modelling
+        output = self.model.generate(tokenized_prompt, **kwargs)
+        
+        for i, o in enumerate(output):
+            gen_txt = self.tokenizer.decode(o, skip_special_tokens=True)
+            gen_txt = gen_txt[len(category):]
+            truncated_txt = gen_txt.split('.')
+            truncated_txt = '.'.join(truncated_txt[:-1]) + '.'
+            generated_outputs.append(truncated_txt)
+            
+            if print_output:
+                print(truncated_txt + '\n')
+                
+        return generated_outputs

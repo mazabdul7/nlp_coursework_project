@@ -58,24 +58,10 @@ if __name__ == '__main__':
 	dataset_truth_val = df_to_dataset_obj(truth_data_val, ['LABEL', 'REVIEW_TEXT'])
 	dataset_truth_train = df_to_dataset_obj(truth_data_train, ['LABEL', 'REVIEW_TEXT'])
 
-	# tokenized_dec = dataset_dec.map(tokenize_data(tokenizer=), batched=True)
 	tokenizer.pad_token = tokenizer.eos_token
 	tokenized_val = dataset_truth_val.map(tokenize_data, batched=True, remove_columns=['text'])
 	tokenized_train = dataset_truth_train.map(tokenize_data, batched=True, remove_columns=['text'])
 
-	# Collate and chunk datasets
-	# lm_train = tokenized_train.map(
-    # group_texts,
-    # batched=True,
-    # batch_size=1000,
-    # num_proc=4,
-	# )
-	# lm_val = tokenized_val.map(
-    # group_texts,
-    # batched=True,
-    # batch_size=1000,
-    # num_proc=4,
-	# )
 	lm_train = tokenized_train
 	lm_val = tokenized_val
 
@@ -86,7 +72,7 @@ if __name__ == '__main__':
 	del truth_data
 
 	# Set padding token and set mlm false to use the inputs as the labels shifted to right by one
-	data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
+	# data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
 	collator = DataCollatorWithPadding(tokenizer, padding='max_length', max_length=block_size)
 
 	# Load model
