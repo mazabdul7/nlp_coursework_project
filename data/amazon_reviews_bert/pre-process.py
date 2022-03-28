@@ -75,7 +75,9 @@ def write_data(df, path):
 if __name__ == "__main__":
     TEST_PATH = "./test/amazon_reviews.txt"
     TRAIN_PATH = "./train/amazon_reviews.txt"
+    paths = (TEST_PATH, TRAIN_PATH)
     
-    df = load_data(TEST_PATH)
-    write_data(transform(df), "./test.txt")
+    for p in paths:
+        df = load_data(p)
+        write_data(transform(df), p)
     
