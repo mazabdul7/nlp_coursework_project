@@ -12,6 +12,13 @@ SPECIAL_TOKENS  = { "bos_token": "<|BOS|>",
                     "pad_token": "<|PAD|>",
                     "sep_token": "<|SEP|>"}
 
+
+HTML_ENCODINGS = { "&#124;": "|",
+                   "&#34;": '""',
+                   "&#62;": ">",
+                   "&#60;": "<",
+                   "&#8482": SPECIAL_TOKENS["unk_token"]}
+
 def load_data(path):
     return pd.read_csv(path)
 
@@ -24,7 +31,8 @@ def transform(df):
         return clean(reviews, lowercase=False, extra_spaces=True, stopwords=False, stemming=False, numbers=False, punct=False, clean_all=False)
 
     def sub_line_breaks_and_special_chars(reviews):
-        reviews = reviews.replace("&#34;", '""')
+        for key, value in HTML_ENCODINGS.items():
+            reviews.replace(key, value)
         return reviews.replace("<br />", SPECIAL_TOKENS["sep_token"])
 
     def strip_emojis(reviews):
