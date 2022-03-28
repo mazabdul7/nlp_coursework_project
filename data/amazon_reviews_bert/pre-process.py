@@ -18,13 +18,18 @@ def load_data(path):
 def transform(df):
     def clean_text(reviews):
         return clean(reviews, lowercase=False, extra_spaces=True, stopwords=False, stemming=False, numbers=False, punct=False, clean_all=False)
-    
-    def strip_emojis(reviews):
-        return emoji.get_emoji_regexp().sub(SPECIAL_TOKENS["unk_token"], reviews)
 
+    def sub_line_breaks(reviews):
+        return df.replace(r'<br />', SPECIAL_TOKENS["sep_token"], regex=True)
+
+    def strip_emojis(df):
+        return df.astype(str).apply(lambda x: x.str.encode('ascii', 'ignore').str.decode('ascii'))
 
     df["REVIEW_TEXT"] = df["REVIEW_TEXT"].apply(clean_text)
-    df["REVIEW_TEXT"] = df["REVIEW_TEXT"].apply(strip_emojis)
+    df["REVIEW_TITLE"] = df["REVIEW_TITLE"].apply(clean_text)
+    
+    sub_line_breaks(df)
+    strip_emojis(df)
     return df
 
 def write_data(df, path):
