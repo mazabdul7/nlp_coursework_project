@@ -32,7 +32,7 @@ def transform(df):
 
     def sub_line_breaks_and_special_chars(reviews):
         for key, value in HTML_ENCODINGS.items():
-            reviews.replace(key, value)
+            reviews = reviews.replace(key, value)
         return reviews.replace("<br />", SPECIAL_TOKENS["sep_token"])
 
     def strip_emojis(reviews):
