@@ -58,14 +58,21 @@ def transform(df):
                                "]+", flags=re.UNICODE)
         return emoji_pattern.sub(SPECIAL_TOKENS["unk_token"], reviews)
     
+    def sub_urls(reviews):
+        return re.sub(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", SPECIAL_TOKENS["unk_token"], reviews)
+
     df["REVIEW_TEXT"] = df["REVIEW_TEXT"].apply(decode)    
     df["REVIEW_TEXT"] = df["REVIEW_TEXT"].apply(clean_text)
     df["REVIEW_TEXT"] = df ["REVIEW_TEXT"].apply(strip_emojis)
     df["REVIEW_TEXT"] = df ["REVIEW_TEXT"].apply(sub_line_breaks_and_special_chars)
+    df["REVIEW_TEXT"] = df ["REVIEW_TEXT"].apply(sub_urls)
+
+
     df["REVIEW_TITLE"] = df["REVIEW_TITLE"].apply(decode)
     df["REVIEW_TITLE"] = df["REVIEW_TITLE"].apply(clean_text)
     df["REVIEW_TITLE"] = df ["REVIEW_TITLE"].apply(strip_emojis)
     df["REVIEW_TITLE"] = df["REVIEW_TITLE"].apply(sub_line_breaks_and_special_chars)
+    df["REVIEW_TITLE"] = df ["REVIEW_TITLE"].apply(sub_urls)
     
     return df
 
