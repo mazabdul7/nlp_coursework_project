@@ -14,7 +14,7 @@ SPECIAL_TOKENS  = { "bos_token": "<|BOS|>",
 
 
 HTML_ENCODINGS = { "&#124;": "|",
-                   "&#34;": '""',
+                   "&#34;": "\"",
                    "&#62;": ">",
                    "&#60;": "<",
                    "&#8482": SPECIAL_TOKENS["unk_token"]}
