@@ -6,5 +6,6 @@ config = {
 	# The negative polarity has authentic web reviews, positive polarity has authentic tripadvisor reviews
 	'pos_path': r'positive_polarity',
 	'neg_path': r'negative_polarity',
-	'amazon_path': r'amazon_reviews'
+	'amazon_path': r'amazon_reviews',
+	'clean_amazon_path': r'amazon_reviews_bert'
 }

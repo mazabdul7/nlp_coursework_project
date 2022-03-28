@@ -115,5 +115,29 @@ class DataLoader:
 				return data.get(data['LABEL'] == 1)
 			return data.get(data['LABEL'] == 0)
 
+	def load_clean_amazon(self, test_mode=False) -> pd.DataFrame:
+		""" Loads data from the Amazon dataset. Label 1 (1) is deceptive reviews, Label 2 (0) is authentic.
+
+		Args:
+			deceptive (bool, optional): Return deceptive instead of authentic.
+            test_mode (bool, optional): Returns test set instead.
+
+		Returns:
+			Dataframe: Returns a dataframe of the reviews.
+		"""
+		if test_mode:
+			path = os.path.join(self.base_path, config['clean_amazon_path'], 'test')
+		else:
+			path = os.path.join(self.base_path, config['clean_amazon_path'], 'train')
+		data_path = self.list_all_txt_files(path)[0]
+
+
+		# cols = [f'col_{i}' for i in range(0,2)]
+		# data = pd.read_csv(data_path, names=cols, sep=',')
+
+		data = pd.read_csv(data_path, sep=',')
+
+		return data
+
 	def testing(self):
 		print('updated2')
