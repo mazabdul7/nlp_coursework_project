@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 from cleantext import clean
+import emoji
+
 import pandas as pd
 
 SPECIAL_TOKENS  = { "bos_token": "<|BOS|>",
@@ -16,8 +18,13 @@ def load_data(path):
 def transform(df):
     def clean_text(reviews):
         return clean(reviews, lowercase=False, extra_spaces=True, stopwords=False, stemming=False, numbers=False, punct=False, clean_all=False)
+    
+    def strip_emojis(reviews):
+        return emoji.get_emoji_regexp().sub(SPECIAL_TOKENS["unk_token"], reviews)
+
 
     df["REVIEW_TEXT"] = df["REVIEW_TEXT"].apply(clean_text)
+    df["REVIEW_TEXT"] = df["REVIEW_TEXT"].apply(strip_emojis)
     return df
 
 def write_data(df, path):
