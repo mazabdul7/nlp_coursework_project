@@ -1,11 +1,12 @@
 import os
 os.environ["WANDB_DISABLED"] = "true"
 
-from transformers import AutoTokenizer, DataCollatorForLanguageModeling, AutoModelForCausalLM, TrainingArguments, \
+from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments, \
 	Trainer, DataCollatorWithPadding
 import datasets
 import torch
 from utils.loader import DataLoader
+import math
 
 
 # Load tokenizer
@@ -29,22 +30,6 @@ def tokenize_data(inputs):
 	return tokens
 
 
-def group_texts(examples):
-    # Concatenate all texts.
-    concatenated_examples = {k: sum(examples[k], []) for k in examples.keys()}
-    total_length = len(concatenated_examples[list(examples.keys())[0]])
-    # We drop the small remainder, we could add padding if the model supported it instead of this drop, you can
-        # customize this part to your needs.
-    total_length = (total_length // block_size) * block_size
-    # Split by chunks of max_len.
-    result = {
-        k: [t[i : i + block_size] for i in range(0, total_length, block_size)]
-        for k, t in concatenated_examples.items()
-    }
-    result["labels"] = result["input_ids"].copy()
-    return result
-
-
 if __name__ == '__main__':
 	# Load datasets
 	data_loader = DataLoader()
@@ -58,6 +43,7 @@ if __name__ == '__main__':
 	dataset_truth_val = df_to_dataset_obj(truth_data_val, ['LABEL', 'REVIEW_TEXT'])
 	dataset_truth_train = df_to_dataset_obj(truth_data_train, ['LABEL', 'REVIEW_TEXT'])
 
+	# Tokenize data
 	tokenizer.pad_token = tokenizer.eos_token
 	tokenized_val = dataset_truth_val.map(tokenize_data, batched=True, remove_columns=['text'])
 	tokenized_train = dataset_truth_train.map(tokenize_data, batched=True, remove_columns=['text'])
@@ -77,13 +63,29 @@ if __name__ == '__main__':
 
 	# Load model
 	model = AutoModelForCausalLM.from_pretrained("distilgpt2")
+	
+	### UNCOMMENT IF FREEZING LAYERS ###
+	# for parameter in model.parameters(): # Freeze all layers
+	#     parameter.requires_grad = False
+
+	# for i, m in enumerate(model.transformer.h):   
+	#     #Only un-freeze the last n transformer blocks
+	#     if i >= 6:
+	#         for parameter in m.parameters():
+	#             parameter.requires_grad = True 
+	# for parameter in model.transformer.ln_f.parameters():        
+	#     parameter.requires_grad = True
+
+	# for parameter in model.lm_head.parameters():        
+	#     parameter.requires_grad = True
+ 
 	training_args = TrainingArguments(
 		output_dir="checkpoints/distilgpt2",
 		evaluation_strategy="epoch",
 		learning_rate=2e-5,
-		num_train_epochs=4,
+		num_train_epochs=6,
 		weight_decay=0.01,
-		per_device_train_batch_size=10,
+		per_device_train_batch_size=4,
 		save_strategy='epoch'
 	)
 	trainer = Trainer(
@@ -99,6 +101,5 @@ if __name__ == '__main__':
 
 	trainer.train()
 
-	import math
 	eval_results = trainer.evaluate()
 	print(f"Perplexity: {math.exp(eval_results['eval_loss']):.2f}")
