@@ -11,5 +11,6 @@ config = {
                     "eos_token": "<|EOS|>",
                     "unk_token": "<|UNK|>",                    
                     "pad_token": "<|PAD|>",
-                    "sep_token": "<|SEP|>"}
+                    "sep_token": "<|SEP|>"},
+	'clean_amazon_path': r'amazon_reviews_bert'
 }
