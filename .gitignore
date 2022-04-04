@@ -147,3 +147,7 @@ sample_data/
 wandb/
 *.zip
 **training
+
+# exception files
+!amazon_train_elmo.csv.zip
+
