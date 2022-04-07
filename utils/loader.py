@@ -138,6 +138,3 @@ class DataLoader:
 		data = pd.read_csv(data_path, sep=',')
 
 		return data
-
-	def testing(self):
-		print('updated2')

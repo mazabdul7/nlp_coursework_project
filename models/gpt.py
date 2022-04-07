@@ -4,6 +4,7 @@ import torch
 MODEL = 'distilgpt2'
 
 class GPT2:
+    ''' Wrapper class for managing and loading GPT2 models. '''
     def __init__(self, model_path=None, full_model=False, special_tokens=None) -> None:
         self.tokenizer = self.get_tokenizer(special_tokens)
         self.model = self.get_model(self.tokenizer, special_tokens=special_tokens, load_model_path=model_path, full_model=full_model)
