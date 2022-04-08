@@ -39,7 +39,6 @@ if __name__ == '__main__':
 	truth_data_train = truth_data.iloc[int(val_ratio * len(truth_data)):]
 
 	# Clean and convert to Dataset objects
-	# dataset_dec = df_to_dataset_obj(dec_data, ['LABEL', 'REVIEW_TEXT'])
 	dataset_truth_val = df_to_dataset_obj(truth_data_val, ['LABEL', 'REVIEW_TEXT'])
 	dataset_truth_train = df_to_dataset_obj(truth_data_train, ['LABEL', 'REVIEW_TEXT'])
 
