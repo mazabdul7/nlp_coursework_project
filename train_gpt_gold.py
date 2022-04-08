@@ -28,12 +28,10 @@ if __name__ == '__main__':
 	truth_data_train = truth_data[int(val_ratio * len(truth_data)):]
 
 	# Clean and convert to Dataset objects
-	# dataset_dec = df_to_dataset_obj(dec_data, ['LABEL', 'REVIEW_TEXT'])
 	dataset_truth_val = list_to_dataset_obj(truth_data_val)
 	dataset_truth_train = list_to_dataset_obj(truth_data_train)
 
 	tokenizer.pad_token = tokenizer.eos_token
-	# tokenized_dec = dataset_dec.map(tokenize_data(tokenizer=), batched=True)
 	tokenized_val = dataset_truth_val.map(tokenize_data, batched=True, remove_columns=['text'])
 	tokenized_train = dataset_truth_train.map(tokenize_data, batched=True, remove_columns=['text'])
 
